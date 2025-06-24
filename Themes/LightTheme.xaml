@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Окремі ключі для Color -->
+    <Color x:Key="BackgroundBaseColor">#FFFFFF</Color>
+    <Color x:Key="TextBaseColor">#000000</Color>
+    <Color x:Key="AccentBaseColor">#1976D2</Color>
+    <Color x:Key="InputBaseColor">#F5F5F5</Color>
+    <Color x:Key="BorderBaseColor">#CCCCCC</Color>
+    <Color x:Key="ErrorBaseColor">#D32F2F</Color>
+
+    <!-- SolidColorBrush ресурси -->
+    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource BackgroundBaseColor}"/>
+    <SolidColorBrush x:Key="TextColor" Color="{StaticResource TextBaseColor}"/>
+    <SolidColorBrush x:Key="AccentColor" Color="{StaticResource AccentBaseColor}"/>
+    <SolidColorBrush x:Key="InputBackground" Color="{StaticResource InputBaseColor}"/>
+    <SolidColorBrush x:Key="BorderBrushColor" Color="{StaticResource BorderBaseColor}"/>
+    <SolidColorBrush x:Key="ErrorColor" Color="{StaticResource ErrorBaseColor}"/>
+    <SolidColorBrush x:Key="MenuBackground" Color="#F0F0F0"/>
+</ResourceDictionary>

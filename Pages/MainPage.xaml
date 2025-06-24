@@ -8,108 +8,166 @@
       d:DesignHeight="500" d:DesignWidth="800"
       Title="MainPage">
 
-    <Grid Background="#2C3E50">
+    <Grid Background="{DynamicResource WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Панель управления (шрифты, кнопки) -->
             <RowDefinition Height="*"/>
-            <!-- Основная область (список, заметки) -->
         </Grid.RowDefinitions>
 
-        <!-- Панель управления -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
+        <!-- Верхня панель керування -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10" VerticalAlignment="Top">
 
-            <!-- Підпис для кнопки "Зберегти" -->
-
+            <!-- Зберегти -->
             <Button Content="Зберегти"
-                Command="{Binding SaveNoteCommand}"
-                Width="100"
-                Height="30"
-                Margin="10,0,0,0"
-                Click="Button_Click"/>
+                    Command="{Binding SaveNoteCommand}"
+                    Click="Button_Click"
+                    Width="100" Height="36" Margin="6,6,0,6"
+                    Background="{DynamicResource AccentColor}" Foreground="White" FontWeight="SemiBold"
+                    BorderThickness="0" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-            <!-- Підпис для кнопки "Створити замітку" -->
-
+            <!-- Створити -->
             <Button Content="Створити замітку"
-                Click="CreateNoteButton_Click"
-                Width="120"
-                Height="30"
-                Margin="10,0,0,0"/>
+                    Click="CreateNoteButton_Click"
+                    Width="140" Height="36" Margin="10,6,0,6"
+                    Background="#2196F3" Foreground="White" FontWeight="SemiBold"
+                    BorderThickness="0" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-            <!-- Підпис для ComboBox шрифтів -->
-            <Label Content="Шрифт" VerticalAlignment="Center" Foreground="#BDC3C7" FontSize="14"/>
+            <!-- Нагадування -->
+            <Button Content="Додати нагадування"
+                    Click="AddReminderButton_Click"
+                    Width="160" Height="36" Margin="10,6,0,6"
+                    Background="#FFC107" Foreground="#1E1E2F" FontWeight="SemiBold"
+                    BorderThickness="0" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-            <ComboBox x:Name="FontSelector" SelectionChanged="FontSelector_SelectionChanged" Width="150">
-                <ComboBoxItem Content="Arial"/>
-                <ComboBoxItem Content="Times New Roman"/>
-                <ComboBoxItem Content="Verdana"/>
+            <!-- Шрифт -->
+            <Label Content="Шрифт" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="{DynamicResource TextColor}"/>
+            <ComboBox x:Name="FontSelector" SelectionChanged="FontSelector_SelectionChanged" Width="150" Background="{DynamicResource InputBackground}" BorderBrush="{DynamicResource BorderBrushColor}" Padding="5">
+                <ComboBoxItem Content="Arial" Foreground="Black"/>
+                <ComboBoxItem Content="Times New Roman" Foreground="Black"/>
+                <ComboBoxItem Content="Verdana" Foreground="Black"/>
             </ComboBox>
 
-            <!-- Підпис для ComboBox розміру шрифтів -->
-            <Label Content="Розмір шрифту" VerticalAlignment="Center" Foreground="#BDC3C7" FontSize="14"/>
-
-            <ComboBox x:Name="FontSizeSelector" SelectionChanged="FontSizeSelector_SelectionChanged" Width="100">
-                <ComboBoxItem Content="10"/>
-                <ComboBoxItem Content="12"/>
-                <ComboBoxItem Content="14"/>
-                <ComboBoxItem Content="16"/>
-                <ComboBoxItem Content="18"/>
-                <ComboBoxItem Content="20"/>
-                <ComboBoxItem Content="24"/>
-                <ComboBoxItem Content="28"/>
-                <ComboBoxItem Content="32"/>
-                <ComboBoxItem Content="36"/>
-                <ComboBoxItem Content="40"/>
+            <!-- Розмір -->
+            <Label Content="Розмір шрифту" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="{DynamicResource TextColor}"/>
+            <ComboBox x:Name="FontSizeSelector" SelectionChanged="FontSizeSelector_SelectionChanged" Width="100" Background="{DynamicResource InputBackground}" BorderBrush="{DynamicResource BorderBrushColor}" Padding="5">
+                <ComboBoxItem Content="10" Foreground="Black"/>
+                <ComboBoxItem Content="12" Foreground="Black"/>
+                <ComboBoxItem Content="14" Foreground="Black"/>
+                <ComboBoxItem Content="16" Foreground="Black"/>
+                <ComboBoxItem Content="18" Foreground="Black"/>
+                <ComboBoxItem Content="20" Foreground="Black"/>
+                <ComboBoxItem Content="24" Foreground="Black"/>
+                <ComboBoxItem Content="28" Foreground="Black"/>
+                <ComboBoxItem Content="32" Foreground="Black"/>
+                <ComboBoxItem Content="36" Foreground="Black"/>
+                <ComboBoxItem Content="40" Foreground="Black"/>
             </ComboBox>
         </StackPanel>
 
-        <!-- Основная часть (список и текстовое поле) -->
-        <Grid Grid.Row="1">
-            <!-- Підпис для ListBox -->
-            <Label Content="Список заметок" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Foreground="#BDC3C7" FontSize="14"/>
+        <!-- Основна частина -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <ListBox ItemsSource="{Binding Notes}" 
-         SelectedItem="{Binding SelectedNote}" 
+            <!-- Список заметок -->
+            <StackPanel Grid.Column="0">
+                <Label Content="Список нотаток" Margin="0,0,0,10" Foreground="{DynamicResource TextColor}" FontWeight="Bold"/>
+                <ListBox ItemsSource="{Binding Notes}"
+         SelectedItem="{Binding SelectedNote}"
          DisplayMemberPath="Title"
-         Margin="10,0,551,10"
-         Background="#7F8C8D" 
-         Foreground="White">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Background" Value="#7F8C8D"/>
-                        <!-- Сірий фон -->
-                        <Setter Property="Foreground" Value="White"/>
-                        <!-- Білий текст -->
-                        <Setter Property="Tag" 
-                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
-                        <Setter Property="ContextMenu">
-                            <Setter.Value>
-                                <ContextMenu>
-                                    <MenuItem Header="Переименовать"
+         Background="{DynamicResource InputBackground}"
+         Foreground="{DynamicResource TextColor}"
+         BorderThickness="0"
+         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="Margin" Value="2"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}"/>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Переіменувати"
                                   Command="{Binding PlacementTarget.Tag.DataContext.RenameNoteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                   CommandParameter="{Binding}" />
-                                    <MenuItem Header="Удалить"
+                                        <MenuItem Header="Видалити"
                                   Command="{Binding PlacementTarget.Tag.DataContext.DeleteNoteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                   CommandParameter="{Binding}" />
-                                </ContextMenu>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#3A3A55"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#5566AA"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
 
-            <!-- Підпис для поля текстового редактора -->
-            <Label Content="Текст заметки" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="254,0,10,0" Foreground="#BDC3C7" FontSize="14"/>
+            </StackPanel>
 
-            <RichTextBox Name="NoteRichTextBox" 
+            <!-- Текст заметки -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Текст нотаток"
+                       Grid.Row="0"
+                       Margin="0,0,0,10"
+                       Foreground="{DynamicResource TextColor}"
+                       FontWeight="Bold"/>
+
+                <RichTextBox Name="NoteRichTextBox"
+             Grid.Row="1"
              AcceptsReturn="True"
              VerticalScrollBarVisibility="Auto"
-             Margin="254,0,10,10"
+             Background="{DynamicResource InputBackground}"
+             Foreground="{DynamicResource TextColor}"
+             BorderBrush="{DynamicResource BorderBrushColor}"
+             BorderThickness="1"
+             FontSize="14"
+             Padding="10"
              TextChanged="NoteRichTextBox_TextChanged"
-             Background="#7F8C8D" 
-             Foreground="White"
              KeyDown="NoteRichTextBox_KeyDown"/>
+
+            </Grid>
+
         </Grid>
     </Grid>
-
 </Page>

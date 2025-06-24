@@ -63,5 +63,6 @@ namespace Oraton
                 navService.Content = null; // Очищаем содержимое Frame
             }
         }
+
     }
 }

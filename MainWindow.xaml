@@ -5,38 +5,161 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Oraton"
         mc:Ignorable="d"
-        Title="Oraton" Height="500" Width="800" Icon="Images/ico.ico">
+        Title="Oraton"
+        Height="500"
+        Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Icon="Images/ico.ico">
 
-    <Grid Name="MainGrid" Background="#2C3E50" Margin="0,20,0,0">
-        <!-- Меню -->
-        <Menu DockPanel.Dock="Top" Background="#34495E" Margin="0,-20,0,187">
-            <MenuItem Header="Довідка" Foreground="#ECF0F1">
-                <MenuItem Header="Про програму" Click="About_Click" Foreground="#BDC3C7"/>
-            </MenuItem>
-        </Menu>
+    <Border Background="{DynamicResource WindowBackground}" CornerRadius="12" Padding="0" BorderBrush="#3A3A50" BorderThickness="1">
+        <Grid>
+            <!-- Header panel -->
+            <Grid Background="{DynamicResource HeaderBackground}" Height="40" VerticalAlignment="Top" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- Основний фрейм -->
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Background="#34495E" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <TextBlock Text="Oraton"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           Foreground="{DynamicResource TextColor}"
+                           FontSize="16"
+                           FontWeight="Bold"/>
 
-        <!-- Лейбл з назвою програми Oraton по центру -->
-        <Label x:Name="namelabel" Content="Oraton" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="White" Margin="0,100,0,0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button Content="–"
+                            Click="Minimize_Click"
+                            Width="40" Height="40"
+                            Background="Transparent"
+                            Foreground="{DynamicResource TextColor}"
+                            FontSize="16"
+                            BorderBrush="{x:Null}"
+                            Cursor="Hand"
+                            ToolTip="Згорнути"/>
+                    <Button Content="✕"
+                            Click="Close_Click"
+                            Width="40" Height="40"
+                            Background="Transparent"
+                            Foreground="{DynamicResource TextColor}"
+                            FontSize="16"
+                            BorderBrush="{x:Null}"
+                            Cursor="Hand"
+                            ToolTip="Закрити"/>
+                </StackPanel>
+            </Grid>
 
-        <!-- Кнопка "Registration" -->
-        <Button x:Name="LoginButton" Content="Реєстрація" HorizontalAlignment="Left" Margin="145,299,0,0" VerticalAlignment="Top" Height="49" Width="121" Click="Button_Click_2" Background="#2980B9" Foreground="White">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="14"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+            <!-- Main Grid -->
+            <Grid Name="MainGrid" Margin="0,40,0,0" Background="{DynamicResource WindowBackground}">
+                <Menu DockPanel.Dock="Top" Background="{DynamicResource MenuBackground}" Margin="0">
+                    <!-- Довідка -->
+                    <MenuItem Header="Довідка" Foreground="{DynamicResource TextColor}">
+                        <MenuItem Header="Про програму" Click="About_Click" Foreground="Black"/>
+                    </MenuItem>
 
-        <!-- Кнопка "Login" -->
-        <Button x:Name="RegButton" Content="Вхід" HorizontalAlignment="Left" Margin="559,299,0,0" VerticalAlignment="Top" Height="49" Width="121" Click="Button_Click_1" Background="#E74C3C" Foreground="White">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="14"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-    </Grid>
+                    <!-- Тема -->
+                    <MenuItem Header="Тема" Foreground="{DynamicResource TextColor}">
+                        <MenuItem x:Name="DarkThemeItem"
+                  Header="Темна"
+                  IsCheckable="True"
+                  IsChecked="True"
+                  Click="DarkThemeItem_Click"
+                  Foreground="Black"/>
+                        <MenuItem x:Name="LightThemeItem"
+                  Header="Світла"
+                  IsCheckable="True"
+                  IsChecked="False"
+                  Click="LightThemeItem_Click"
+                  Foreground="Black"/>
+                    </MenuItem>
+                </Menu>
+
+
+                <Frame Name="MainFrame"
+                       NavigationUIVisibility="Hidden"
+                       Background="{DynamicResource WindowBackground}"
+                       VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch"
+                       Margin="0,30,0,0"/>
+
+                <Label x:Name="namelabel"
+                       Content="Oraton"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,70,0,0"
+                       Opacity="0.9"/>
+
+                <Button x:Name="LoginButton"
+                        Content="Реєстрація"
+                        HorizontalAlignment="Left"
+                        Margin="120,300,0,0"
+                        VerticalAlignment="Top"
+                        Height="50"
+                        Width="140"
+                        Click="Button_Click_2"
+                        Background="#4CAF50"
+                        Foreground="{DynamicResource TextColor}"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="8">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#45A049"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button x:Name="RegButton"
+                        Content="Вхід"
+                        HorizontalAlignment="Right"
+                        Margin="0,300,120,0"
+                        VerticalAlignment="Top"
+                        Height="50"
+                        Width="140"
+                        Click="Button_Click_1"
+                        Background="#E53935"
+                        Foreground="{DynamicResource TextColor}"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="8">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D32F2F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

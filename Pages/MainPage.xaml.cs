@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using Oraton.Classes;
 using Oraton.DataBase;
 using Oraton.ViewModel;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace Oraton.Pages
 {
@@ -105,10 +106,45 @@ namespace Oraton.Pages
             if (DataContext is MainViewModel viewModel)
             {
                 TextRange textRange = new TextRange(NoteRichTextBox.Document.ContentStart, NoteRichTextBox.Document.ContentEnd);
-                viewModel.NoteContent = textRange.Text.Trim(); // Обновляем NoteContent в ViewModel
+                viewModel.NoteContent = textRange.Text.Trim();
             }
         }
+        private void AddReminderButton_Click(object sender, RoutedEventArgs e)
+        {
+            TextRange selectedTextRange = new TextRange(NoteRichTextBox.Selection.Start, NoteRichTextBox.Selection.End);
+            string selectedText = selectedTextRange.Text.Trim();
 
+            if (string.IsNullOrEmpty(selectedText))
+            {
+                MessageBox.Show("Будь ласка, виділіть текст з датою і часом.");
+                return;
+            }
+
+            // Спроба знайти всю строку, в якій знаходиться виділення
+            string fullText = new TextRange(NoteRichTextBox.Document.ContentStart, NoteRichTextBox.Document.ContentEnd).Text;
+            string[] lines = fullText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            foreach (string line in lines)
+            {
+                if (line.Contains(selectedText))
+                {
+                    // Спроба витягнути дату та повідомлення
+                    // Формат очікується: "dd.MM.yyyy HH:mm текст"
+                    string[] parts = line.Split(new[] { ' ' }, 3); // split на 3 частини: дата, час, текст
+
+                    if (parts.Length >= 3 &&
+                        DateTime.TryParseExact(parts[0] + " " + parts[1], "dd.MM.yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime reminderTime))
+                    {
+                        string message = parts[2];
+                        new Reminder(reminderTime, message);
+                        MessageBox.Show($"Нагадування встановлено: \"{message}\" на {reminderTime}");
+                        return;
+                    }
+                }
+            }
+
+            MessageBox.Show("Не вдалося знайти рядок з правильною датою та текстом.\nОчікуваний формат: дд.мм.рррр гг:хх Ваш текст");
+        }
 
     }
 }

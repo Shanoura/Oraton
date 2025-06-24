@@ -8,42 +8,149 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RegistrationPage">
 
-    <Grid Background="#2C3E50">
+    <Grid Background="{DynamicResource WindowBackground}">
+        <!-- Назад -->
+        <Button Content="Назад"
+                x:Name="BackButton"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Width="80"
+                Height="40"
+                Margin="0,30,20,0"
+                FontSize="14"
+                Background="#E53935"
+                Foreground="White"
+                BorderBrush="#E53935"
+                BorderThickness="0"
+                Cursor="Hand"
+                Click="Button_Click_1">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="#E53935"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#D32F2F"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
         <!-- Заголовок -->
-        <TextBlock Text="Реєстрація" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" FontSize="24" FontWeight="Bold" Foreground="#ECF0F1"/>
+        <TextBlock Text="Реєстрація"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,40,0,0"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource TextColor}"/>
 
-        <!-- Підпис для поля введення користувача -->
-        <TextBlock Text="Username" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,106,0,0" FontWeight="SemiBold" FontSize="14" Foreground="#BDC3C7"/>
-        <TextBox x:Name="usernameField" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="250" Height="40" Margin="50,130,50,0" Padding="10,5" BorderBrush="#34495E" BorderThickness="1" Background="#34495E" Foreground="White" FontSize="14" FocusVisualStyle="{x:Null}" />
+        <!-- Поля реєстрації -->
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Width="300"
+                    Margin="0,40,0,0">
 
-        <!-- Підпис для поля введення email -->
-        <TextBlock Text="Email" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,191,0,0" FontWeight="SemiBold" FontSize="14" Foreground="#BDC3C7"/>
-        <TextBox x:Name="emailField" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="250" Height="40" Margin="50,210,50,0" Padding="10,5" BorderBrush="#34495E" BorderThickness="1" Background="#34495E" Foreground="White" FontSize="14" FocusVisualStyle="{x:Null}" />
+            <!-- Username -->
+            <TextBlock Text="Імʼя користувача"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,10,0,5"/>
 
-        <!-- Підпис для поля введення пароля -->
-        <TextBlock Text="Password" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,266,0,0" FontWeight="SemiBold" FontSize="14" Foreground="#BDC3C7"/>
-        <TextBox x:Name="passwordField" HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="250" Height="40" Margin="50,290,50,0" Padding="10,5" BorderBrush="#34495E" BorderThickness="1" Background="#34495E" Foreground="White" FontSize="14" FocusVisualStyle="{x:Null}" />
+            <TextBox x:Name="usernameField"
+                     Background="{DynamicResource InputBackground}"
+                     Foreground="{DynamicResource TextColor}"
+                     BorderBrush="{DynamicResource BorderBrushColor}"
+                     BorderThickness="1"
+                     Padding="10"
+                     FontSize="14"
+                     Height="40"/>
 
-        <!-- Кнопка для підтвердження -->
-        <Button Content="Зареєструватися" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250" Height="40" Margin="50,370,50,0" FontSize="16" FontWeight="Bold" Background="#2980B9" Foreground="White" BorderBrush="#2980B9" BorderThickness="1" Cursor="Hand" Click="Button_Click">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="14"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+            <!-- Email -->
+            <TextBlock Text="Email"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,20,0,5"/>
 
-        <!-- Повідомлення -->
-        <TextBlock x:Name="lblMessage" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,420,0,0" FontSize="12"/>
+            <TextBox x:Name="emailField"
+                     Background="{DynamicResource InputBackground}"
+                     Foreground="{DynamicResource TextColor}"
+                     BorderBrush="{DynamicResource BorderBrushColor}"
+                     BorderThickness="1"
+                     Padding="10"
+                     FontSize="14"
+                     Height="40"/>
 
-        <!-- Кнопка назад в правому верхньому куті -->
-        <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Height="40" Margin="0,30,20,0" FontSize="14" Background="#E74C3C" Foreground="White" BorderBrush="#E74C3C" BorderThickness="1" Cursor="Hand" Click="Button_Click_1">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="14"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+            <!-- Пароль -->
+            <TextBlock Text="Пароль"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource TextColor}"
+                       Margin="0,20,0,5"/>
+
+            <TextBox x:Name="passwordField"
+                     Background="{DynamicResource InputBackground}"
+                     Foreground="{DynamicResource TextColor}"
+                     BorderBrush="{DynamicResource BorderBrushColor}"
+                     BorderThickness="1"
+                     Padding="10"
+                     FontSize="14"
+                     Height="40"/>
+
+            <!-- Кнопка -->
+            <Button x:Name="RegisterButton"
+                    Content="Зареєструватися"
+                    HorizontalAlignment="Stretch"
+                    Height="45"
+                    Margin="0,30,0,0"
+                    Background="{DynamicResource AccentColor}"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    Click="Button_Click"
+                    BorderThickness="0"
+                    Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Background" Value="{DynamicResource AccentColor}"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#45A049"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Повідомлення -->
+            <TextBlock x:Name="lblMessage"
+                       Foreground="{DynamicResource ErrorColor}"
+                       FontSize="12"
+                       Margin="0,12,0,0"
+                       Visibility="Collapsed"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"/>
+        </StackPanel>
     </Grid>
-
 </Page>
